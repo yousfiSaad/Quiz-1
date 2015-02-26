@@ -54,6 +54,22 @@
 	};
 	methods.end.scope = 'public';
 
+	methods.getResponse = function(qID){
+		var id = sessionStorage.SESS_ID;
+		var resp = null;
+		if(id){
+			var s = ds.Session(id);
+			var q = ds.Question(qID);
+			if(s && q && q.exam.ID == s.exam.ID){
+				var r = s.responses.find('question.ID == :1', q.ID);
+				if(r){
+					resp = JSON.parse(r.response);
+				}
+			}
+		}
+		return resp;
+	};
+	methods.getResponse.scope = 'public';
 	methods.respond = function respond (qID, response) {
 		var id = sessionStorage.SESS_ID;
 		

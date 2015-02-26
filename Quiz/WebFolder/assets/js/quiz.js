@@ -3,7 +3,7 @@
 (function() {
 	angular
 		.module('app')
-		.controller('QuizCtrl', ['$scope', '$wakanda', '$routeParams', function($scope, $wakanda, $routeParams) {
+		.controller('QuizCtrl', ['$q', '$scope', '$wakanda', '$routeParams', function($q, $scope, $wakanda, $routeParams) {
 			$scope.time = 0;
 			$scope.response = null;
 			$scope.current = 0;
@@ -25,6 +25,23 @@
 				format();
 			});
 
+			var getSavedResponse = function(q){
+				return $q(function(resolve, reject){
+					ds.Utils.getResponse(q.__KEY)
+						.then(function (res) {
+							var results = res.result;
+							if(results){
+								console.log(results);
+								resolve(results)
+							}
+							else{
+								reject(res);
+							}
+						});
+
+				})
+			};
+
 			function format() {
 				var q = questions[$scope.current];
 				$scope.response = null;
@@ -37,6 +54,10 @@
 						}
 						break;
 				}
+				getSavedResponse(q)
+					.then(function(resp){
+						$scope.response = resp;
+					});
 				$scope.progress = parseInt(100 * ($scope.current + 1) / questions.$totalCount);
 				$scope.question = q;
 			}
