@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><permissions>
+	<allow action="create" groupName="student" groupID="920F50FD9DB04563B3B25C22B33CC508" resource="Model.Response" temporaryForcePermissions="false" type="dataClass"/>
+	<allow action="update" groupName="student" groupID="920F50FD9DB04563B3B25C22B33CC508" resource="Model.Response" temporaryForcePermissions="false" type="dataClass"/>
+	<allow action="remove" groupName="student" groupID="920F50FD9DB04563B3B25C22B33CC508" resource="Model.Response" temporaryForcePermissions="false" type="dataClass"/>
+</permissions>

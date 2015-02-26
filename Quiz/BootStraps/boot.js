@@ -1,0 +1,1 @@
+﻿if(ds.Exam.length === 0){	include('ssjs/fill.js');}

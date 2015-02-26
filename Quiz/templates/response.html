@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- If you delete this meta tag, Half Life 3 will never be released. -->
+<meta name="viewport" content="width=device-width" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>WakQuiz - <%= session.exam.title %></title>
+	
+<link rel="stylesheet" type="text/css" href="http://localhost:8081/assets/css/email.css" />
+
+</head>
+ 
+<body bgcolor="#FFFFFF">
+
+<!-- HEADER -->
+<table class="head-wrap" bgcolor="#F3F3F3">
+	<tr>
+		<td></td>
+		<td class="header container" >
+				
+				<div class="content">
+				<table bgcolor="#F3F3F3">
+					<tr>
+						<td><img src="http://quiz.us.wak-apps.com/assets/images/Wakanda-logo.jpg" /></td>
+						<td align="right"><h6 class="collapse"><%= session.exam.title %></h6></td>
+					</tr>
+				</table>
+				</div>
+				
+		</td>
+		<td></td>
+	</tr>
+</table><!-- /HEADER -->
+
+
+<!-- BODY -->
+<table class="body-wrap">
+	<tr>
+		<td></td>
+		<td class="container" bgcolor="#FFFFFF">
+
+			<div class="content">
+			<table>
+				<tr>
+					<td>
+						<table>
+							<tr>
+								<td>Name</td>
+								<td>: <b><%= session.user %></b></td>
+							</tr>
+							<tr>
+								<td>Start</td>
+								<td>: <b><%= session.start %></b></td>
+							</tr>
+							<tr>
+								<td>End</td>
+								<td>: <b><%= session.end %></b></td>
+							</tr>
+							<tr>
+								<td>Duration</td>
+								<td>: <b><%= formatTime(session.end - session.start) %></b></td>
+							</tr>
+						</table>
+						<br/>
+						<h1>Responses:</h1>
+						<%  var i = -1; session.exam.questions.forEach(function(q){
+							i++;
+							var resp = session.responses.find('question.ID === :1', q.getKey());
+						%>
+							<hr style="margin-top: 30px;margin-bottom:20px;"/>
+							<table>
+								<tr>
+									<td style="color: #0061A6;">
+										<b><% 	print(i + ') ' + q.is_html? q.question: ('<b>' + sanitizer.escape(q.question) + '</b>')); %></b>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<br/>
+										<u>User response:</u>
+									</td>
+								</tr>
+								<tr>
+									<td><% if(resp){ %>
+									<%= sanitizer.escape(formatResponse(resp)) %>
+									<% } else { print ('No Response');}%></td>
+								</tr>
+								<% if(q.response){%>
+								<tr>
+									<td><br/><u>Valid response:</u></td>
+								</tr>
+								<tr>
+									<td>
+										<%= sanitizer.escape(formatResponse(q)) %>
+									</td>
+								</tr>
+								<%}%>
+							</table>
+						<% }); %>
+					</td>
+				</tr>
+			</table>
+			</div><!-- /content -->
+									
+		</td>
+		<td></td>
+	</tr>
+</table><!-- /BODY -->
+
+</body>
+</html>

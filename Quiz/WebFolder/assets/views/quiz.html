@@ -1,0 +1,66 @@
+<form ng-submit="next(response)" style="padding: 20px;">
+	<div class="row">
+		<div class="col-lg-4 col-md-4 pull-right col-sm-12" style="padding: 0;">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-xs-3">
+							<i class="fa fa-clock-o fa-3x"></i>
+						</div>
+						<div class="col-xs-9 text-right">
+							<div class="huge">Temps passé:</div>
+							<div style="font-size: 20px;">{{time|time}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" style="font-size: 70px;display: initial;font-family: 'Wire One', Helvetica, Arial, sans-serif;">
+		<center>{{current + 1}} / {{questions.$totalCount}}</center>
+	</div>
+	<div class="row">
+		<div class="progress">
+			<div 	class="progress-bar progress-bar-striped active"
+					style="width: {{progress}}%;">
+			</div>
+		</div>
+	</div>
+	<div class="row" style="margin-bottom: 20px;">
+		<span ng-bind-html="question.question"></span>
+	</div>
+	<div class="row">
+		<div class="qcm" ng-if="question.type === 'Q'">
+			<div ng-repeat="o in question.options track by $index">
+				<label>
+					<input type="radio" ng-model="$parent.$parent.response" style="margin-right: 5px;" ng-value="$index"/> {{o}}
+				</label>
+			</div>
+		</div>
+		<div class="multiple" ng-if="question.type === 'M'" ng-init="$parent.response={}">
+			<div ng-repeat="o in question.options track by $index">
+				<label>
+					<input ng-model="response[$index]" style="margin-right: 5px;" type="checkbox" ng-value="$index"> {{o}}
+				</label>
+			</div>
+		</div>
+		<div class="true-false" ng-if="question.type === 'T'">
+			<label>
+			<input type="radio" value="1" name="response" style="margin-right: 5px;" ng-model="$parent.response"> Vrai
+			</label><br/>
+			<label>
+			<input type="radio" value="0" name="response" style="margin-right: 5px;" ng-model="$parent.response"> Faux
+			</label>
+		</div>
+		<div class="generic" ng-if="question.type === 'G'">
+			<textarea style="width:100%;height: 100px;resize:vertical;" ng-model="$parent.response"></textarea>
+		</div>
+	</div>
+	<div class="row">
+		<a 	class="btn btn-default col-sm-12 col-lg-4 col-md-4"
+			href=""
+			ng-if="current > 0"
+			ng-click="previous()">Question précédente</a>
+		<button type="submit" class="btn btn-default pull-right col-sm-12 col-lg-4 col-md-4">{{questions.$totalCount > current + 1? 'Question suivante': 'Terminer'}}</button>
+	</div>
+</form>

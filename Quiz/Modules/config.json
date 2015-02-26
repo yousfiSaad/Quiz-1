@@ -1,0 +1,19 @@
+{
+	"mail": {
+		"sender": {
+			"username": "YOUR_EMAIL",
+			"password": "YOUR_PASSWORD",
+			"address": "YOUR_SERVER",
+			"port": 587,
+			"domain": "YOUR_DOMAIN",
+			"isSSL": false
+		},
+		"report": {
+			"from": "noreply.quiz@4d.com",
+			"bcc": [],
+			"cc": ["cc@mail.com"],
+			"to": ["to@mail.com"],
+			"template": "templates/response.html"
+		}
+	}
+}
